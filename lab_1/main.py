@@ -9,14 +9,23 @@ def write_text(path: str, text: str):
         f.write(text)
 
 
+def decrypt(text, decryption_mapping):
+    decrypted_text = ''
+    for char in text:
+        decrypted_text += decryption_mapping.get(char, char)
+
+    return decrypted_text
+
+
 def task_1():
-    text = read_text("D:\\SHALAN REP\\ISB_Labs\\lab_1\\texts\\text_task1.txt")
+    text = \
+        read_text("D:\\SHALAN REP\\ISB_Labs\\lab_1\\texts\\task1\\text.txt")
     alphabet = 'abcdefghijklmnopqrstuvwxyz'
     alphabet_replacement = \
-        read_text("D:\\SHALAN REP\\ISB_Labs\\lab_1\\texts\\key.txt")
-
+        read_text("D:\\SHALAN REP\\ISB_Labs\\lab_1\\texts\\task1\\key.txt")
 
     print(alphabet_replacement)
+
     result_string = ''
     for letter in text:
         try:
@@ -28,34 +37,26 @@ def task_1():
 
     print(result_string)
 
-    write_text("D:\\SHALAN REP\\ISB_Labs\\lab_1\\texts\\encrypt.txt", \
+    write_text("D:\\SHALAN REP\\ISB_Labs\\lab_1\\texts\\task1\\encrypt.txt", \
                result_string)
 
     for i in range(0, len(alphabet)):
         print(alphabet[i] + ' -> ' + alphabet_replacement[i])
 
 
-def decrypt(text, decryption_mapping):
-    decrypted_text = ''
-    for char in text:
-        decrypted_text += decryption_mapping.get(char, char)
-
-    return decrypted_text
-
-
 def task_2():
     crypt_alphabet = \
-        read_text("D:\\SHALAN REP\\ISB_Labs\\lab_1\\texts\\key2.txt")
+        read_text("D:\\SHALAN REP\\ISB_Labs\\lab_1\\texts\\task2\\key.txt")
     normal_alphabet = " ОИЕНШЧЬПРЭТЙКЯМСЛДЗАЖЦУВГБФХЮ,ЩЫ."
 
     decryption_mapping = dict(zip(crypt_alphabet, normal_alphabet))
 
     data = \
-        read_text("D:\\SHALAN REP\\ISB_Labs\\lab_1\\texts\\text_task2.txt")
+        read_text("D:\\SHALAN REP\\ISB_Labs\\lab_1\\texts\\task2\\text.txt")
 
     decrypted_text = decrypt(data, decryption_mapping)
 
-    write_text("D:\\SHALAN REP\\ISB_Labs\\lab_1\\texts\\result.txt", \
+    write_text("D:\\SHALAN REP\\ISB_Labs\\lab_1\\texts\\task2\\result.txt", \
                decrypted_text)
 
     
