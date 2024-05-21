@@ -10,6 +10,12 @@ PI = {1: 0.2148, 2: 0.3672, 3: 0.2305, 4: 0.1875}
 
 
 def frequency_bit_test(seq) -> float:
+    """The function for frequency bitwise test
+    Args:
+      seq: generated sequence
+    Returns:
+      p_val: probability value for the generator
+    """
     try:
         summary = 0
         for i in seq:
@@ -25,6 +31,12 @@ def frequency_bit_test(seq) -> float:
 
 
 def ordinary_bit_test(seq) -> float:
+    """The function for tests for equal sequential bits
+    Args:
+      seq: generated sequence
+    Returns:
+      p_val: probability value for the generator
+    """
     try:
         cntr = seq.count("1")
         cntr *= 1 / len(seq)
@@ -44,6 +56,12 @@ def ordinary_bit_test(seq) -> float:
 
 
 def split_bits(seq) -> list:
+    """The function for separating a sequence into blocks
+    Args:
+      seq: generated sequence
+    Returns:
+      blocks: split block list
+    """
     blocks = []
     amount = len(seq) - (len(seq) % 8)
     for i in range(0, amount, 8):
@@ -53,6 +71,12 @@ def split_bits(seq) -> list:
 
 
 def largest_number_of_units(blocks: list) -> dict:
+    """The function for finding the maximum sequence length
+    Args:
+      blocks: split block list
+    Returns:
+      sorted_dict: statistics of different lengths
+    """
     try:
         unit_counts = {}
         for block in blocks:
@@ -77,6 +101,12 @@ def largest_number_of_units(blocks: list) -> dict:
 
 
 def check_len_test(dictionary: dict) -> float:
+    """The function for tests for the longest sequence of units in the block
+    Args:
+      dictionary: statistics of different lengths
+    Returns:
+      p_val: probability value for the generator
+    """
     try:
         sqr_x = 0
         for i, val in dictionary.items():
