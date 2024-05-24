@@ -50,13 +50,4 @@ def read_json(file: str):
         print(f"Error reading file {str(e)}")
         return
 
-    text_1 = data.get("path_to_text_1")
-    key_1 = data.get("path_to_key_1")
-    encrypted = data.get("path_to_encryption_1")
-
-    text_2 = data.get("path_to_text_2")
-    key_2 = data.get("path_to_key_2")
-    decrypted = data.get("path_to_decrypt_2")
-    alphabet = data.get("path_to_normal_alphabet_2")
-
-    return text_1, key_1, encrypted, text_2, key_2, decrypted, alphabet
+    return data
