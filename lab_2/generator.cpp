@@ -6,6 +6,13 @@
 
 using namespace std;
 
+/**
+ * Generates a sequence of 128 random binary numbers.
+ *
+ * @param [in] rand_num generates a random number in the range from 0 to 32766.
+ * @param [in] binary_num forms a binary sequence from the remainder of even and odd values
+ * @return The randomly generated binary string.
+ */
 int generator()
 {
     srand(time(0));

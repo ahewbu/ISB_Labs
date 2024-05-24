@@ -13,7 +13,7 @@ def read_text(path: str):
             text = f.read().lower()
         return text
     except FileNotFoundError:
-        return "File not found"
+        return "File with data not found"
     except Exception as e:
         return f"Error reading file: {str(e)}"
 
@@ -28,7 +28,7 @@ def write_text(path: str, text: str):
         with open(path, 'w', encoding='UTF-8') as f:
             f.write(text)
     except FileNotFoundError:
-        print("The file was not found.")
+        print("Incorrect path to the directory")
     except Exception as e:
         print(f"Error writing to file: {str(e)}.")
 
@@ -44,7 +44,7 @@ def read_json(file: str):
         with open(file, "r", encoding="utf-8") as f:
             data = json.load(f)
     except FileNotFoundError:
-        print("File not found")
+        print("File with settings not found")
         return
     except Exception as e:
         print(f"Error reading file {str(e)}")
