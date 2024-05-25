@@ -1,6 +1,5 @@
 import argparse
 import os
-import pickle
 from cryptography.hazmat.primitives.ciphers.aead import ChaCha20Poly1305
 from cryptography.hazmat.primitives.asymmetric import rsa
 from cryptography.hazmat.primitives import serialization
@@ -46,6 +45,57 @@ def key_generation(path_to_symmetric_key: str, path_to_public_key: str, path_to_
     enc_symmetrical_key = public_k.encrypt(symmetric_key, padding.OAEP(mgf=padding.MGF1(algorithm=hashes.SHA256()),
                                                                        algorithm=hashes.SHA256(), label=None))
     write_binary(path_to_symmetric_key, enc_symmetrical_key)
+
+
+def decrypt_symmetric_key(path_to_symmetric_key: str, path_to_secret_key: str):
+    """
+    :param path_to_symmetric_key: Path to symmetric key
+    :param path_to_secret_key: Path to secret key
+    """
+    enc_symmetrical_key = read_binary(path_to_symmetric_key)
+    privat_k = read_binary(path_to_secret_key)
+    privat_k = serialization.load_pem_private_key(privat_k, password=None)
+    symmetrical_key = privat_k.decrypt(enc_symmetrical_key, padding.OAEP(mgf=padding.MGF1(algorithm=hashes.SHA256()),
+                                                                         algorithm=hashes.SHA256(), label=None))
+    return symmetrical_key
+
+
+def encrypt_file(path_to_initial_file: str, path_to_secret_key: str, path_to_symmetric_key: str,
+                 path_to_encrypt_file: str) -> None:
+    """
+    :param path_to_initial_file: Path to text
+    :param path_to_secret_key: Path to secret key
+    :param path_to_symmetric_key: Path to symmetric key
+    :param path_to_encrypt_file: Path to encrypted file
+    """
+    symmetrical_key = decrypt_symmetric_key(path_to_symmetric_key, path_to_secret_key)
+    txt = read_text(path_to_initial_file)
+    nonce = os.urandom(16)
+    algorithm = algorithms.ChaCha20(symmetrical_key, nonce)
+    cipher = Cipher(algorithm, mode=None)
+    encrypt = cipher.encryptor()
+    cipher_txt = encrypt.update(bytes(txt, 'utf-8'))
+    res = {'ciphertxt': cipher_txt, 'nonce': nonce}
+    write_encrypt(path_to_encrypt_file, res)
+
+
+def decrypt_file(path_to_encrypt_file: str, path_to_secret_key: str, path_to_symmetric_key: str,
+                 path_to_decrypted_file: str) -> None:
+    """
+    :param path_to_encrypt_file: Path to encrypted file
+    :param path_to_secret_key: Path to secret key
+    :param path_to_symmetric_key: Path to symmetric key
+    :param path_to_decrypted_file: Path to decrypted file
+    """
+    symmetrical_key = decrypt_symmetric_key(path_to_symmetric_key, path_to_secret_key)
+    cipher_tmp = read_encrypt(path_to_encrypt_file)
+    cipher_txt = cipher_tmp['ciphertxt']
+    nonce = cipher_tmp['nonce']
+    algorithm = algorithms.ChaCha20(symmetrical_key, nonce)
+    cipher = Cipher(algorithm, mode=None)
+    decrypt = cipher.decryptor()
+    dec_txt = decrypt.update(cipher_txt) + decrypt.finalize()
+    write_decrypt(path_to_decrypted_file, dec_txt)
 
 
 def main():
