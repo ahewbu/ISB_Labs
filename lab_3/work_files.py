@@ -51,3 +51,18 @@ def read_json(file: str):
         return
 
     return data
+
+
+def write_binary(path: str, data):
+    """The function of writing information to file
+    Args:
+      path: path to the file
+      data: written data
+    """
+    try:
+        with open(path, 'wb') as f:
+            f.write(data)
+    except FileNotFoundError:
+        print("Incorrect path to the directory")
+    except Exception as e:
+        print(f"Error writing to file: {str(e)}.")
