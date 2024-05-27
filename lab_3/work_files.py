@@ -1,4 +1,7 @@
+import argparse
 import json
+import logging
+import os
 import pickle
 
 
@@ -14,9 +17,9 @@ def read_text(path: str):
             text = f.read().lower()
         return text
     except FileNotFoundError:
-        return "File with data not found"
+        return "File with text for encrypt not found"
     except Exception as e:
-        return f"Error reading file: {str(e)}"
+        logging.error(f'[reading_from_txt]: {e}')
 
 
 def write_text(path: str, text: str):
@@ -31,7 +34,7 @@ def write_text(path: str, text: str):
     except FileNotFoundError:
         print("Incorrect path to the directory")
     except Exception as e:
-        print(f"Error writing to file: {str(e)}.")
+        logging.error(f'[writing_to_txt]: {e}')
 
 
 def read_json(file: str):
@@ -48,7 +51,7 @@ def read_json(file: str):
         print("File with settings not found")
         return
     except Exception as e:
-        print(f"Error reading file {str(e)}")
+        logging.error(f'[reading_from_json]: {e}')
         return
 
     return data
@@ -66,7 +69,7 @@ def write_binary(path: str, data):
     except FileNotFoundError:
         print("Incorrect path to the directory")
     except Exception as e:
-        print(f"Error writing to file: {str(e)}.")
+        logging.error(f'[writing_to_bin]: {e}')
 
 
 def read_binary(path: str):
@@ -83,7 +86,7 @@ def read_binary(path: str):
     except FileNotFoundError:
         return "File with data not found"
     except Exception as e:
-        return f"Error reading file: {str(e)}"
+        logging.error(f'[reading_from_bin]: {e}')
 
 
 def write_encrypt(path: str, data):
@@ -98,7 +101,7 @@ def write_encrypt(path: str, data):
     except FileNotFoundError:
         print("Incorrect path to the directory")
     except Exception as e:
-        print(f"Error writing to file: {str(e)}.")
+        logging.error(f'[writing_to_encrypt]: {e}')
 
 
 def read_encrypt(path: str):
@@ -115,7 +118,7 @@ def read_encrypt(path: str):
     except FileNotFoundError:
         return "File with data not found"
     except Exception as e:
-        return f"Error reading file: {str(e)}"
+        logging.error(f'[reading_from_encrypt]: {e}')
 
 
 def write_decrypt(path: str, data):
@@ -130,4 +133,12 @@ def write_decrypt(path: str, data):
     except FileNotFoundError:
         print("Incorrect path to the directory")
     except Exception as e:
-        print(f"Error writing to file: {str(e)}.")
+        logging.error(f'[writing_to_decrypt]: {e}')
+
+
+def validate_file(f):
+    if not os.path.exists(f):
+        # Argparse uses the ArgumentTypeError to give a rejection message like:
+        # error: argument input: x does not exist
+        raise argparse.ArgumentTypeError("{0} does not exist".format(f))
+    return f
