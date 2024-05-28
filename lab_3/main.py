@@ -2,9 +2,6 @@ from func import *
 
 
 def main():
-    # Loading settings from the files
-    json_data = read_json("settings.json")
-
     parser = argparse.ArgumentParser(description='main.py')
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument('-gen', '--generation', type=str, help='Call function to generate keys', dest='generation')
@@ -24,66 +21,8 @@ def main():
                         help="input path to decrypted text", metavar="FILE")
     args = parser.parse_args()
 
-    value = ''
-
-    if args.generation is not None:
-        value = 'generation'
-        if args.symmetric_key is not None:
-            path_symmetric_key = args.symmetric_key
-        else:
-            path_symmetric_key = json_data["symmetric_key"]
-        if args.public_key is not None:
-            path_public_key = args.public_key
-        else:
-            path_public_key = json_data["public_key"]
-        if args.secret_key is not None:
-            path_secret_key = args.secret_key
-        else:
-            path_secret_key = json_data["secret_key"]
-    elif args.encryption is not None:
-        value = 'encryption'
-        if args.symmetric_key is not None:
-            path_symmetric_key = args.symmetric_key
-        else:
-            path_symmetric_key = json_data["symmetric_key"]
-        if args.public_key is not None:
-            path_public_key = args.public_key
-        else:
-            path_public_key = json_data["public_key"]
-        if args.secret_key is not None:
-            path_secret_key = args.secret_key
-        else:
-            path_secret_key = json_data["secret_key"]
-        if args.plain_text is not None:
-            path_initial_file = args.plain_text
-        else:
-            path_initial_file = json_data["text"]
-        if args.encrypted_text is not None:
-            path_encrypted_file = args.encrypted_text
-        else:
-            path_encrypted_file = json_data["encrypted_text"]
-    elif args.decryption is not None:
-        value = 'decryption'
-        if args.symmetric_key is not None:
-            path_symmetric_key = args.symmetric_key
-        else:
-            path_symmetric_key = json_data["symmetric_key"]
-        if args.public_key is not None:
-            path_public_key = args.public_key
-        else:
-            path_public_key = json_data["public_key"]
-        if args.secret_key is not None:
-            path_secret_key = args.secret_key
-        else:
-            path_secret_key = json_data["secret_key"]
-        if args.encrypted_text is not None:
-            path_encrypted_file = args.encrypted_text
-        else:
-            path_encrypted_file = json_data["encrypted_text"]
-        if args.decrypted_text is not None:
-            path_decrypted_file = args.decrypted_text
-        else:
-            path_decrypted_file = json_data["decrypted_text"]
+    (value, path_symmetric_key, path_public_key, path_secret_key,
+     path_initial_file, path_encrypted_file, path_decrypted_file) = get_arguments(args, "settings.json")
 
     match value:
         case 'generation':

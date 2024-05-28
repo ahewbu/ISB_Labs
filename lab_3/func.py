@@ -30,3 +30,77 @@ def decrypt_file(path_to_encrypt_file: str, path_to_secret_key: str, path_to_sym
     nonce = cipher_tmp['nonce']
     dec_txt = decrypt(cipher_txt, symmetrical_key, nonce)
     write_decrypt(path_to_decrypted_file, dec_txt)
+
+
+def get_arguments(args, path_to_settings):
+    json_data = read_json(path_to_settings)
+
+    value = ''
+    path_symmetric_key = ''
+    path_public_key = ''
+    path_secret_key = ''
+    path_initial_file = ''
+    path_encrypted_file = ''
+    path_decrypted_file = ''
+
+    if args.generation is not None:
+        value = 'generation'
+        if args.symmetric_key is not None:
+            path_symmetric_key = args.symmetric_key
+        else:
+            path_symmetric_key = json_data["symmetric_key"]
+        if args.public_key is not None:
+            path_public_key = args.public_key
+        else:
+            path_public_key = json_data["public_key"]
+        if args.secret_key is not None:
+            path_secret_key = args.secret_key
+        else:
+            path_secret_key = json_data["secret_key"]
+    elif args.encryption is not None:
+        value = 'encryption'
+        if args.symmetric_key is not None:
+            path_symmetric_key = args.symmetric_key
+        else:
+            path_symmetric_key = json_data["symmetric_key"]
+        if args.public_key is not None:
+            path_public_key = args.public_key
+        else:
+            path_public_key = json_data["public_key"]
+        if args.secret_key is not None:
+            path_secret_key = args.secret_key
+        else:
+            path_secret_key = json_data["secret_key"]
+        if args.plain_text is not None:
+            path_initial_file = args.plain_text
+        else:
+            path_initial_file = json_data["text"]
+        if args.encrypted_text is not None:
+            path_encrypted_file = args.encrypted_text
+        else:
+            path_encrypted_file = json_data["encrypted_text"]
+    elif args.decryption is not None:
+        value = 'decryption'
+        if args.symmetric_key is not None:
+            path_symmetric_key = args.symmetric_key
+        else:
+            path_symmetric_key = json_data["symmetric_key"]
+        if args.public_key is not None:
+            path_public_key = args.public_key
+        else:
+            path_public_key = json_data["public_key"]
+        if args.secret_key is not None:
+            path_secret_key = args.secret_key
+        else:
+            path_secret_key = json_data["secret_key"]
+        if args.encrypted_text is not None:
+            path_encrypted_file = args.encrypted_text
+        else:
+            path_encrypted_file = json_data["encrypted_text"]
+        if args.decrypted_text is not None:
+            path_decrypted_file = args.decrypted_text
+        else:
+            path_decrypted_file = json_data["decrypted_text"]
+
+    return (value, path_symmetric_key, path_public_key, path_secret_key, path_initial_file,
+            path_encrypted_file, path_decrypted_file)

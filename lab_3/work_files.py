@@ -136,9 +136,15 @@ def write_decrypt(path: str, data):
         logging.error(f'[writing_to_decrypt]: {e}')
 
 
-def validate_file(f):
-    if not os.path.exists(f):
+def validate_file(file):
+    """Function for checking the existence of a file
+    Args:
+        file: path to the file
+    Returns:
+        path to file if it exists
+    """
+    if not os.path.exists(file):
         # Argparse uses the ArgumentTypeError to give a rejection message like:
         # error: argument input: x does not exist
-        raise argparse.ArgumentTypeError("{0} does not exist".format(f))
-    return f
+        raise argparse.ArgumentTypeError("{0} does not exist".format(file))
+    return file
