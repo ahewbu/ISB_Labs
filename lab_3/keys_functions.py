@@ -1,3 +1,5 @@
+from typing import Any
+
 from cryptography.hazmat.primitives.ciphers.aead import ChaCha20Poly1305
 from cryptography.hazmat.primitives.asymmetric import rsa
 from cryptography.hazmat.primitives import serialization
@@ -32,7 +34,7 @@ def key_generation(path_to_symmetric_key: str, path_to_public_key: str, path_to_
     write_binary(path_to_symmetric_key, enc_symmetrical_key)
 
 
-def decrypt_symmetric_key(path_to_symmetric_key: str, path_to_secret_key: str):
+def decrypt_symmetric_key(path_to_symmetric_key: str, path_to_secret_key: str) -> Any:
     """
     :param path_to_symmetric_key: Path to symmetric key
     :param path_to_secret_key: Path to secret key

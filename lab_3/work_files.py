@@ -5,7 +5,7 @@ import os
 import pickle
 
 
-def read_text(path: str):
+def read_text(path: str) -> bytes | str:
     """The function of reading text from file
     Args:
       path: path to the file
@@ -22,7 +22,7 @@ def read_text(path: str):
         logging.error(f'[reading_from_txt]: {e}')
 
 
-def write_text(path: str, text: str):
+def write_text(path: str, text: str) -> None:
     """The function of writing information to file
     Args:
       path: path to the file
@@ -37,7 +37,7 @@ def write_text(path: str, text: str):
         logging.error(f'[writing_to_txt]: {e}')
 
 
-def read_json(file: str):
+def read_json(file: str) -> bytes:
     """The function of reading data from a json file
     Args:
       file: path to the file
@@ -49,15 +49,13 @@ def read_json(file: str):
             data = json.load(f)
     except FileNotFoundError:
         print("File with settings not found")
-        return
     except Exception as e:
         logging.error(f'[reading_from_json]: {e}')
-        return
 
     return data
 
 
-def write_binary(path: str, data):
+def write_binary(path: str, data: bytes) -> None:
     """The function of writing information to file
     Args:
       path: path to the file
@@ -72,7 +70,7 @@ def write_binary(path: str, data):
         logging.error(f'[writing_to_bin]: {e}')
 
 
-def read_binary(path: str):
+def read_binary(path: str) -> bytes | str:
     """The function of reading data from file
     Args:
       path: path to the file
@@ -89,7 +87,7 @@ def read_binary(path: str):
         logging.error(f'[reading_from_bin]: {e}')
 
 
-def write_encrypt(path: str, data):
+def write_encrypt(path: str, data: bytes) -> None:
     """The function of writing encrypt information to file
     Args:
       path: path to the file
@@ -104,7 +102,7 @@ def write_encrypt(path: str, data):
         logging.error(f'[writing_to_encrypt]: {e}')
 
 
-def read_encrypt(path: str):
+def read_encrypt(path: str) -> bytes | str:
     """The function of reading data from file
     Args:
       path: path to the file
@@ -121,7 +119,7 @@ def read_encrypt(path: str):
         logging.error(f'[reading_from_encrypt]: {e}')
 
 
-def write_decrypt(path: str, data):
+def write_decrypt(path: str, data: bytes) -> None:
     """The function of writing information to file
     Args:
       path: path to the file
@@ -136,7 +134,7 @@ def write_decrypt(path: str, data):
         logging.error(f'[writing_to_decrypt]: {e}')
 
 
-def validate_file(file):
+def validate_file(file: str) -> str:
     """Function for checking the existence of a file
     Args:
         file: path to the file
